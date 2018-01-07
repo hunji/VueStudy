@@ -97,6 +97,17 @@ devMiddleware.waitUntilValid(() => {
   })
 })
 
+const jsonServer = require('json-server')
+const apiserver = jsonServer.create()
+const apirouter = jsonServer.router('./db.json')
+const apimiddlewares = jsonServer.defaults()
+
+apiserver.use(apimiddlewares)
+apiserver.use('/api',apirouter)
+apiserver.listen(port+1, () => {
+  console.log('JSON Server is running')
+})
+
 module.exports = {
   ready: readyPromise,
   close: () => {
