@@ -1,41 +1,92 @@
 <template>
-  <div class="slide-show">
+<!--   <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
     <div class="slide-img">
       <a :href="slides[nowIndex].href">
-          <img :src="slides[nowIndex].src">
+        <transition name="slide-trans">
+          <img v-if="isShow" :src="slides[nowIndex].src">
+        </transition>
+        <transition name="slide-trans-old">
+          <img v-if="!isShow" :src="slides[nowIndex].src">
+        </transition>
       </a>
     </div>
     <h2>{{ slides[nowIndex].title }}</h2>
 
     <ul class="slide-pages">
-      <li>&lt;</li>
-      <li v-for="(item,index) in slides">
-        <a @click="goto(index)">{{ index+1 }}</a>
+      <li @click="goto(prevIndex)">&lt;</li>
+      <li v-for="(item,index) in slides" @click="goto(index)">
+        <a  :class="{on: index === nowIndex}" >{{ index+1 }}</a>
       </li>
-      <li>&gt;</li>
+      <li @click="goto(nextIndex)">&gt;</li>
     </ul>
+  </div> -->
+  <div class="block">
+    <el-carousel height="500px" indicator-position="outside">
+      <el-carousel-item  v-for="(item,index) in slides" :key="item" :label="item.title">
+        <img :src="item.src">
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
+
 <script>
+  import Vue from 'vue'
+  import { Carousel, CarouselItem } from 'element-ui'
+  Vue.use(Carousel)
+  Vue.use(CarouselItem)
+
   export default {
     props: {
       slides: {
         type: Array,
         default: []
+      },
+      inv: {
+        type: Number,
+        default: 1000
       }
     },
     data () {
       return {
-        nowIndex: 0
+        nowIndex: 0,
+        isShow: true
+      }
+    },
+    computed: {
+      prevIndex () {
+        if (this.nowIndex === 0) {
+          return this.slides.length - 1
+        } else {
+          return this.nowIndex - 1
+        }
+      },
+      nextIndex () {
+        if (this.nowIndex === this.slides.length - 1) {
+          return 0
+        } else {
+          return this.nowIndex + 1
+        }
       }
     },
     methods: {
       goto (index) {
-        this.nowIndex = index
+        this.isShow = false
+        setTimeout(() => {
+          this.isShow = true
+          this.nowIndex = index
+        }, 10)
+      },
+      runInv () {
+        this.invId = setInterval(() => {
+          this.goto(this.nextIndex)
+        }, this.inv)
+      },
+      clearInv () {
+        clearInterval(this.invId)
       }
     },
     mounted () {
-      console.log(this.slides)
+      this.runInv()
     }
   }
 </script>
@@ -92,4 +143,18 @@
   .slide-pages li .on {
     text-decoration: underline;
   }
+
+  .el-carousel {
+    margin: 15px 15px 15px 0;
+    width: 900px;
+    height: 530px;
+  }
+
+/*  .el-carousel__item:nth-child(2n) {
+     background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+     background-color: #d3dce6;
+  }*/
 </style>
