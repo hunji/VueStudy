@@ -22,8 +22,10 @@
   </div> -->
   <div class="block">
     <el-carousel height="500px" indicator-position="outside">
-      <el-carousel-item  v-for="(item,index) in slides" :key="item" :label="item.title">
-        <img :src="item.src">
+      <el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">
+        <a :href="item.href">
+          <img :src="item.src">
+        </a>
       </el-carousel-item>
     </el-carousel>
   </div>
