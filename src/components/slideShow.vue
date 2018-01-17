@@ -1,5 +1,5 @@
 <template>
-<!--   <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
+  <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
     <div class="slide-img">
       <a :href="slides[nowIndex].href">
         <transition name="slide-trans">
@@ -19,16 +19,16 @@
       </li>
       <li @click="goto(nextIndex)">&gt;</li>
     </ul>
-  </div> -->
-  <div class="block">
-    <el-carousel height="500px" indicator-position="outside">
-      <el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">
-        <a :href="item.href">
-          <img :src="item.src">
-        </a>
-      </el-carousel-item>
-    </el-carousel>
   </div>
+  <!--<div class="block">-->
+    <!--<el-carousel height="490px" indicator-position="outside">-->
+      <!--<el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">-->
+        <!--<a :href="item.href">-->
+          <!--<img :src="item.src">-->
+        <!--</a>-->
+      <!--</el-carousel-item>-->
+    <!--</el-carousel>-->
+  <!--</div>-->
 </template>
 
 <script>
@@ -155,7 +155,7 @@
 /*  .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }*/

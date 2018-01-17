@@ -5,12 +5,14 @@
         <img src="../assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li>退出</li>
-            <li>登录</li>
+            <li> {{ username }}</li>
+            <li v-if="username!== ''" class="nav-pile">|</li>
+            <li v-if="username!== ''" @click="quit">退出</li>
+            <li v-if="username=== ''" @click="logonClick">登录</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
-            <li class="nav-pile">|</li>
-            <li>关于</li>
+            <li v-if="username=== ''" @click="registerClick">注册</li>
+            <li v-if="username=== ''" class="nav-pile">|</li>
+            <li @click="aboutClick">关于</li>
           </ul>
         </div>
       </div>
@@ -23,20 +25,62 @@
     <div class="app-foot">
       <p>© 2018 hunji MIT</p>
     </div>
+    <my-dialog :is-show="isAboutShowDialog" @on-close="closeDialog('isAboutShowDialog')">
+      <p>关于 dialog</p>
+    </my-dialog>
+    <my-dialog :is-show="isRegisterShowDialog" @on-close="closeDialog('isRegisterShowDialog')">
+      <reg-form></reg-form>
+    </my-dialog>
+    <my-dialog :is-show="isLogonShowDialog" @on-close="closeDialog('isLogonShowDialog')">
+      <log-form @has-log="onSuccessLog"></log-form>
+    </my-dialog>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-export default {
-  data () {
-    return {
-      msg: ''
+<script>
+  import Dialog from './dialog'
+  import LogForm from './logForm'
+  import RegForm from './regForm'
+  export default {
+    components: {
+      MyDialog: Dialog,
+      LogForm,
+      RegForm
+    },
+    data () {
+      return {
+        username: '',
+        isAboutShowDialog: false,
+        isRegisterShowDialog: false,
+        isLogonShowDialog: false
+      }
+    },
+    methods: {
+      aboutClick () {
+        this.isAboutShowDialog = true
+      },
+      registerClick () {
+        this.isRegisterShowDialog = true
+      },
+      logonClick () {
+        this.isLogonShowDialog = true
+      },
+      closeDialog (attr) {
+        this[attr] = false
+      },
+      onSuccessLog (data) {
+        console.log(data)
+        this.closeDialog('isLogonShowDialog')
+        this.username = data.username
+      },
+      quit () {
+        this.username = ''
+      }
     }
   }
-}
 </script>
 <style>
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -50,8 +94,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -62,7 +106,7 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
