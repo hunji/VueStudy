@@ -25,7 +25,7 @@
     <div class="app-foot">
       <p>© 2018 hunji MIT</p>
     </div>
-    <my-dialog :is-show="isAboutShowDialog" @on-close="closeDialog('isAboutShowDialog')">
+    <!--<my-dialog :is-show="isAboutShowDialog" @on-close="closeDialog('isAboutShowDialog')">
       <p>关于 dialog</p>
     </my-dialog>
     <my-dialog :is-show="isRegisterShowDialog" @on-close="closeDialog('isRegisterShowDialog')">
@@ -33,17 +33,31 @@
     </my-dialog>
     <my-dialog :is-show="isLogonShowDialog" @on-close="closeDialog('isLogonShowDialog')">
       <log-form @has-log="onSuccessLog"></log-form>
-    </my-dialog>
+    </my-dialog>-->
+    <el-dialog :visible.sync="isAboutShowDialog">
+      <span>关于 dialog</span>
+    </el-dialog>
+    <el-dialog :visible.sync="isRegisterShowDialog">
+      <reg-form></reg-form>
+    </el-dialog>
+    <el-dialog :visible.sync="isLogonShowDialog">
+      <log-form @has-log="onSuccessLog"></log-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import Dialog from './dialog'
+  import Vue from 'vue'
+  import { Dialog } from 'element-ui'
+
+//  import Dialog from './dialog'
   import LogForm from './logForm'
   import RegForm from './regForm'
+
+  Vue.use(Dialog)
   export default {
     components: {
-      MyDialog: Dialog,
+//      MyDialog: Dialog,
       LogForm,
       RegForm
     },

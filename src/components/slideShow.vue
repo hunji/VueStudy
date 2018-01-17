@@ -1,34 +1,34 @@
 <template>
-  <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
-    <div class="slide-img">
-      <a :href="slides[nowIndex].href">
-        <transition name="slide-trans">
-          <img v-if="isShow" :src="slides[nowIndex].src">
-        </transition>
-        <transition name="slide-trans-old">
-          <img v-if="!isShow" :src="slides[nowIndex].src">
-        </transition>
-      </a>
-    </div>
-    <h2>{{ slides[nowIndex].title }}</h2>
+  <!--<div class="slide-show" @mouseover="clearInv" @mouseout="runInv">-->
+    <!--<div class="slide-img">-->
+      <!--<a :href="slides[nowIndex].href">-->
+        <!--<transition name="slide-trans">-->
+          <!--<img v-if="isShow" :src="slides[nowIndex].src">-->
+        <!--</transition>-->
+        <!--<transition name="slide-trans-old">-->
+          <!--<img v-if="!isShow" :src="slides[nowIndex].src">-->
+        <!--</transition>-->
+      <!--</a>-->
+    <!--</div>-->
+    <!--<h2>{{ slides[nowIndex].title }}</h2>-->
 
-    <ul class="slide-pages">
-      <li @click="goto(prevIndex)">&lt;</li>
-      <li v-for="(item,index) in slides" @click="goto(index)">
-        <a  :class="{on: index === nowIndex}" >{{ index+1 }}</a>
-      </li>
-      <li @click="goto(nextIndex)">&gt;</li>
-    </ul>
-  </div>
-  <!--<div class="block">-->
-    <!--<el-carousel height="490px" indicator-position="outside">-->
-      <!--<el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">-->
-        <!--<a :href="item.href">-->
-          <!--<img :src="item.src">-->
-        <!--</a>-->
-      <!--</el-carousel-item>-->
-    <!--</el-carousel>-->
+    <!--<ul class="slide-pages">-->
+      <!--<li @click="goto(prevIndex)">&lt;</li>-->
+      <!--<li v-for="(item,index) in slides" @click="goto(index)">-->
+        <!--<a  :class="{on: index === nowIndex}" >{{ index+1 }}</a>-->
+      <!--</li>-->
+      <!--<li @click="goto(nextIndex)">&gt;</li>-->
+    <!--</ul>-->
   <!--</div>-->
+  <div class="block">
+    <el-carousel height="490px" indicator-position="outside">
+      <el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">
+        <a :href="item.href">
+          <img :src="item.src">
+        </a>
+      </el-carousel-item>
+    </el-carousel>
+  </div>
 </template>
 
 <script>
