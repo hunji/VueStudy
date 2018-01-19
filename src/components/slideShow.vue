@@ -23,9 +23,9 @@
   <div class="block">
     <el-carousel height="490px" indicator-position="outside">
       <el-carousel-item  v-for="(item,index) in slides" :key="item.title" :label="item.title">
-        <a :href="item.href">
+        <router-link class="button" :to="item.href">
           <img :src="item.src">
-        </a>
+        </router-link>
       </el-carousel-item>
     </el-carousel>
   </div>
